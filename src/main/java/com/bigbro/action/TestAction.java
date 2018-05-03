@@ -8,15 +8,13 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-@ParentPackage("struts-default")
-@Namespace("/")
-@Action(value = "testAction")
+
 public class TestAction {
     @Autowired
     TestService testService;
     public String execute(){
         System.out.print("strusts!!!!!!!!!");
         testService.test();
-        return "";
+        return "success";
     }
 }
