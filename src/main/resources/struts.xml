@@ -29,9 +29,9 @@
     <constant name="struts.dispather.parametersWorkaroud" value="false"></constant>
 
     <package name="basePackage-struts" extends="struts-default">
-        <!--<action name="testAction" class="com.bigbro.action.TestAction" method="execute">
+        <action name="testAction" class="com.bigbro.action.TestAction" method="execute">
 
-        </action>-->
+        </action>
     </package>
 
 </struts>
