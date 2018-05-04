@@ -29,9 +29,207 @@
     <constant name="struts.dispather.parametersWorkaroud" value="false"></constant>
 
     <package name="basePackage-struts" extends="struts-default">
-        <action name="testAction" class="com.bigbro.action.TestAction" method="execute">
+        <action name="testAction" class="com.njwb.action.TestAction" method="execute">
             <result name="success">/index.jsp</result>
         </action>
+
+
+
+        <!--<action name="login" ="userController" class="com.njwb.controller.UserController" method="login"> &ndash;&gt;-->
+        <action name="login" class="userController" method="login">
+            <result name="success" type="redirect">/njwb/main.jsp</result>
+            <result name="error">/njwb/result.jsp</result>
+        </action>
+
+        <action name="codeServlet" class="userController" method="codeImg"></action>
+
+        <!-- 部门添加 请求地址：/deptAdd.action
+            class : 对应对象工厂中，实例的key,也就是bean.xml中的beanID,
+                如果这个action对应的controller，还未在bean.xml中配置，那么就需要先去bean.xml中配置
+        -->
+        <action name="deptAdd" class="deptController" method="addDept">
+            <!-- 添加成功》dept.jsp部门列表页， 添加失败》result.jsp
+                添加成功之后，跳转到dept.jsp，但是dept.jsp不能直接跳，因为它已经只管数据展示，不负责数据查询
+            -->
+            <result name="success"  >/queryAllByPage.action</result>
+            <result name="error"  >/njwb/result.jsp</result>
+        </action>
+        <action name="employAdd" class="employController" method="addEmploy">
+            <!-- 添加成功》dept.jsp部门列表页， 添加失败》result.jsp
+                添加成功之后，跳转到dept.jsp，但是dept.jsp不能直接跳，因为它已经只管数据展示，不负责数据查询
+            -->
+            <result name="success"  >/queryAllEpByPage.action</result>
+            <result name="error"  >/njwb/resultEmploy.jsp</result>
+        </action>
+        <action name="holidayAdd" class="holidayController" method="addHoliday">
+            <result name="success"  >/queryAllHdByPage.action</result>
+            <result name="error"  >/njwb/result.jsp</result>
+        </action>
+        <action name="accountAdd" class="accountController" method="addAccount">
+            <result name="success"  >/queryAllAcByPage.action</result>
+            <result name="error"  >/njwb/result.jsp</result>
+        </action>
+        <action name="userAdd" class="userController" method="addUser">
+            <result name="success"  >/queryAllUsByPage.action</result>
+            <result name="error"  >/njwb/result.jsp</result>
+        </action>
+        <action name="roleAdd" class="roleController" method="addRole">
+            <result name="success"  >/queryAllRoByPage.action</result>
+            <result name="error"  >/njwb/result.jsp</result>
+        </action>
+        <action name="permAdd" class="permissionsController" method="permAdd">
+            <result name="success"  >/queryAllPerByPage.action</result>
+            <result name="error"  >/njwb/result.jsp</result>
+        </action>
+
+
+
+
+        <action name="delDept" class="deptController" method="deleteDept">
+            <result name="success"  >/njwb/result.jsp</result>
+        </action>
+        <action name="delEmploy" class="employController" method="deleteEmploy"></action>
+        <action name="delHoliday" class="holidayController" method="deleteHoliday"></action>
+        <action name="delAccount" class="accountController" method="deleteAccount"></action>
+        <action name="delUser" class="userController" method="delUser"></action>
+        <action name="delRole" class="roleController" method="deleteRole"></action>
+        <action name="delPerm" class="permissionsController" method="delPerm"></action>
+
+
+
+        <!-- 修改部门 -->
+        <action name="editDept" class="deptController" method="editDept">
+            <result name="result"  >/njwb/result.jsp</result>
+        </action>
+        <action name="editEmploy" class="employController" method="editEmploy">
+            <result name="result"  >/njwb/resultEmploy.jsp</result>
+        </action>
+        <action name="editHoliday" class="holidayController" method="editHoliday">
+            <result name="result"  >/njwb/result.jsp</result>
+        </action>
+        <action name="editAccount" class="accountController" method="editAccount">
+            <result name="result"  >/njwb/result.jsp</result>
+        </action>
+        <action name="editUser" class="userController" method="editUser">
+            <result name="result"  >/njwb/result.jsp</result>
+        </action>
+        <action name="editRole" class="roleController" method="editRole">
+            <result name="result"  >/njwb/result.jsp</result>
+        </action>
+        <action name="editPerm" class="permissionsController" method="editPerm">
+            <result name="result"  >/njwb/result.jsp</result>
+        </action>
+        <action name="editPwd" class="userController" method="editPwd">
+            <result name="result"  >/njwb/result.jsp</result>
+        </action>
+        <action name="exit" class="userController" method="exit"></action>
+        <action name="exit2" class="userController" method="exit2">
+            <result name="result"  >/njwb/result.jsp</result>
+        </action>
+
+
+
+        <!-- 详情部门 -->
+        <action name="deptDetail" class="deptController" method="deptDetail">
+            <!-- error:查询异常，result.jsp, modify:修改，deptEdit.jsp, detail:详情， deptDetail.jsp -->
+            <result name="error"  >/njwb/result.jsp</result>
+            <result name="modify"  >/njwb/dept/deptEdit.jsp</result>
+            <result name="detail"  >/njwb/dept/deptDetail.jsp</result>
+        </action>
+        <action name="employDetail" class="employController" method="employDetail">
+            <!-- error:查询异常，result.jsp, modify:修改，deptEdit.jsp, detail:详情， deptDetail.jsp -->
+            <result name="error"  >/njwb/resultEmploy.jsp</result>
+            <result name="modify"  >/njwb/employ/employEdit.jsp</result>
+            <result name="detail"  >/njwb/employ/employDetail.jsp</result>
+        </action>
+        <action name="holidayDetail" class="holidayController" method="holidayDetail">
+            <!-- error:查询异常，result.jsp, modify:修改，deptEdit.jsp, detail:详情， deptDetail.jsp -->
+            <result name="error"  >/njwb/result.jsp</result>
+            <result name="modify"  >/njwb/holiday/holidayEdit.jsp</result>
+            <result name="detail"  >/njwb/holiday/holidayDetail.jsp</result>
+        </action>
+        <action name="accountDetail" class="accountController" method="accountDetail">
+            <!-- error:查询异常，result.jsp, modify:修改，deptEdit.jsp, detail:详情， deptDetail.jsp -->
+            <result name="error"  >/njwb/result.jsp</result>
+            <result name="modify"  >/njwb/account/accountEdit.jsp</result>
+            <result name="detail"  >/njwb/account/accountDetail.jsp</result>
+        </action>
+        <action name="userDetail" class="userController" method="userDetail">
+            <!-- error:查询异常，result.jsp, modify:修改，deptEdit.jsp, detail:详情， deptDetail.jsp -->
+            <result name="error"  >/njwb/result.jsp</result>
+            <result name="modify"  >/njwb/user/userEdit.jsp</result>
+
+        </action>
+        <action name="roleDetail" class="roleController" method="roleDetail">
+            <!-- error:查询异常，result.jsp, modify:修改，deptEdit.jsp, detail:详情， deptDetail.jsp -->
+            <result name="error"  >/njwb/result.jsp</result>
+            <result name="modify"  >/njwb/role/roleEdit.jsp</result>
+
+        </action>
+        <action name="permDetail" class="permissionsController" method="permDetail">
+            <!-- error:查询异常，result.jsp, modify:修改，deptEdit.jsp, detail:详情， deptDetail.jsp -->
+            <result name="error"  >/njwb/result.jsp</result>
+            <result name="modify"  >/njwb/perm/permEdit.jsp</result>
+
+        </action>
+
+
+
+        <!-- 分页查询 -->
+        <action name="queryAllByPage" class="deptController" method="queryAllByPage">
+            <result name="success"  >/njwb/dept/dept.jsp</result>
+        </action>
+        <!-- 员工分页查询 -->
+        <action name="queryAllEpByPage" class="employController" method="queryAllEpByPage">
+            <result name="success"  >/njwb/employ/employ.jsp</result>
+        </action>
+        <!-- 请假分页查询 -->
+        <action name="queryAllHdByPage" class="holidayController" method="queryAllHdByPage">
+            <result name="success"  >/njwb/holiday/holiday.jsp</result>
+        </action>
+        <!-- 报销分页查询 -->
+        <action name="queryAllAcByPage" class="accountController" method="queryAllAcByPage">
+            <result name="success"  >/njwb/account/account.jsp</result>
+        </action>
+        <!-- 用户分页查询 -->
+        <action name="queryAllUsByPage" class="userController" method="queryAllUsByPage">
+            <result name="success"  >/njwb/user/user.jsp</result>
+        </action>
+        <action name="queryAllRoByPage" class="roleController" method="queryAllRoByPage">
+            <result name="success"  >/njwb/role/role.jsp</result>
+        </action>
+        <action name="queryAllPerByPage" class="permissionsController" method="queryAllPerByPage">
+            <result name="success"  >/njwb/perm/perm.jsp</result>
+        </action>
+        <action name="queryAllRole" class="roleController" method="queryAllRole"></action>
+        <action name="queryAllMenu" class="menuController" method="queryAllMenu"></action>
+
+
+
+        <!-- 配置文件上传请求 -->
+        <action name="uploadImg" class="uploadController" method="uploadImg">
+            <result name="success"  >/njwb/result.jsp</result>
+        </action>
+        <!-- 配置文件上传请求 ，多个参数-->
+        <action name="upload" class="uploadController" method="upload">
+            <result name="success"  >/njwb/result.jsp</result>
+        </action>
+
+
+
+
+        <!-- ajax请求，返回值为text
+            是否需要配置result?不需要，因为ajax不需要做页面跳转，而且response直接响应结果给前台
+        -->
+        <action name="checkNameText" class="deptController" method="checknNameText"></action>
+        <!-- ajax请求，返回值为xml格式的字符串 -->
+        <action name="queryDeptXml" class="deptController" method="queryDeptXml"></action>
+        <action name="queryDeptJson" class="deptController" method="queryDeptJson"></action>
+
+
+
+
+        <action name="queryChaDept" class="employController" method="queryCha"></action>
     </package>
 
 </struts>

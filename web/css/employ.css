@@ -1,0 +1,15 @@
+@CHARSET "UTF-8";
+body{
+	100px;
+	}
+
+.addE img {
+	vertical-align: middle;
+	margin-right: 10px;
+	border-collapse: collapse;
+}
+.deptInfo {
+	width: 600px;
+	margin: 40px auto;
+	border-collapse: collapse;
+}

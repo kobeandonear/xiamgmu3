@@ -5,16 +5,94 @@
          version="3.1">
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>classpath:spring-config.xml</param-value></context-param>
+        <param-value>classpath:spring-config.xml</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>isLog4jAutoInitializationDisabled</param-name>
+        <param-value>false</param-value>
+    </context-param>
+    <!-- 默认就会找这个文件，不需要额外配置引用
+    <context-param>
+        <param-name>log4jConfiguration</param-name>
+        <param-value>classpath:/log4j2.xml</param-value>
+    </context-param>
+   -->
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+    <!--  设置session有效时间，单位是分钟  -->
+    <session-config>
+        <session-timeout>30</session-timeout>
+    </session-config>
+
+    <!-- 设置全局的初始化参数 -->
+    <context-param>
+        <param-name>charsetEncoding</param-name>
+        <param-value>utf-8</param-value>
+    </context-param>
+
+    <!-- 字符集过滤器 -->
+    <filter>
+        <filter-name>charsetFilter</filter-name>
+        <filter-class>com.njwb.filter.CharsetFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>charsetFilter</filter-name>
+        <!-- 拦截所有的请求，不需要做权限校验的，特殊处理 -->
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+
+    <filter>
+        <filter-name>authFilter</filter-name>
+        <filter-class>com.njwb.filter.AuthFilter</filter-class>
+        <init-param>
+            <param-name>noAuthUrl</param-name>
+            <param-value>codeServlet,testAction,login.jsp,login.action,.css,.js,.png,result.jsp,codeServlet.action,uploadImg.action,upload.jsp,ajaxJs.jsp,queryDeptJson.action,queryDeptXml.action,ajaxJquery.jsp,employ.jsp</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>authFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <listener>
+        <listener-class>org.apache.logging.log4j.web.Log4jServletContextListener</listener-class>
+    </listener>
+
+    <filter>
+        <filter-name>log4jServletFilter</filter-name>
+        <filter-class>org.apache.logging.log4j.web.Log4jServletFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>log4jServletFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
+        <dispatcher>ERROR</dispatcher>
+    </filter-mapping>
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
     <filter>
         <filter-name>struts2</filter-name>
-        <filter-class>org.apache.struts2.dispatcher.filter.StrutsPrepareAndExecuteFilter</filter-class>
+        <filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>struts2</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+    <!--<servlet>
+        <servlet-name>dispatcherServlet</servlet-name>
+        <servlet-class>com.njwb.system.DispatcherServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>dispatcherServlet</servlet-name>
+        &lt;!&ndash; 核心分发器，只处理调用后台代码的请求。jsp,js,css等请求不处理
+            给所有调用后台代码的请求，加一个标识，比如 .do   .action结尾
+            这个时候，就需要要求jsp中所有的请求到后台的，必须是以.action结尾！！！！
+        &ndash;&gt;
+        <url-pattern>*.action</url-pattern>
+    </servlet-mapping>-->
 </web-app>
