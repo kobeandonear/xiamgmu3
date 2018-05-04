@@ -14,6 +14,7 @@ import com.njwb.exception.OAException;
 import com.njwb.service.UserService;
 import com.njwb.system.SystemProterties;
 import com.njwb.transaction.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class UserServiceImpl implements UserService {
 	private Logger log = Logger.getLogger(UserServiceImpl.class);
@@ -22,7 +23,9 @@ public class UserServiceImpl implements UserService {
 	 * 1.需要提供set方法
 	 * 2.bean.xml中需要配置依赖关系
 	 */
+	@Autowired
 	private UserDao userDao;
+
 	private Transaction transaction;
 	
 	public void setUserDao(UserDao userDao) {
@@ -91,7 +94,10 @@ public class UserServiceImpl implements UserService {
 		pageModel.setPageNo(pageModel.getPageNoFromPage(pageNoStr));
 		
 		try {
-			userList = userDao.queryAllUsByPage(pageSize, pageModel.getPageNo());
+			Integer pageNo = pageModel.getPageNo();
+			Integer startIndex = (pageNo - 1) * pageSize;
+
+			userList = userDao.queryAllUsByPage(pageSize, startIndex);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -104,7 +110,7 @@ public class UserServiceImpl implements UserService {
 	 * 删除
 	 * @throws OAException 
 	 */
-	public int deleteByNo(String userNo) throws OAException {
+	public int deleteByNo(Integer userNo) throws OAException {
 		log.info("进行账户删除，userNo：" + userNo);
 		int count=0;
 		transaction.begin();
@@ -122,7 +128,7 @@ public class UserServiceImpl implements UserService {
 		
 	}
 
-	public User queryByUserNo(String userNo) throws OAException {
+	public User queryByUserNo(Integer userNo) throws OAException {
 		User user = null;
 		try {
 			user = userDao.queryByDeptNo(userNo);

@@ -97,7 +97,7 @@ public class UserDaoImpl implements UserDao {
 		return count;
 	}
 	
-	public List<User> queryAllUsByPage(int pageSize, int pageNo) throws SQLException {
+	public List<User> queryAllUsByPage(int pageSize, int startIndex) throws SQLException {
 		String sql = "select u.t_id,u.t_user_account,u.t_user_pwd,u.t_emp_no,u.t_role_id,u.t_create_time,u.t_user_status, "+
 		" e.t_employ_name,r.t_role_name  from t_user u inner join t_employ e "
 		+" on u.t_emp_no=e.t_employ_no  inner join t_role r on u.t_role_id=r.t_id   order by u.t_id limit ?,?";
@@ -106,12 +106,12 @@ public class UserDaoImpl implements UserDao {
 		// (asc:升序，不给，默认是升序)
 		// 开始位置： startIndex = (pageNo-1)*pageSize
 		List<User> list = JdbcTemplate.executeQuery(sql, new UserMapper(),
-				((pageNo - 1) * pageSize), pageSize);
+				(startIndex, pageSize);
 		return list;
 	}
 
 	
-	public int deleteByNo(String userNo) throws SQLException {
+	public int deleteByNo(Integer userNo) throws SQLException {
 		String sql = "delete from t_user where t_id = ?";
 		
 		int count = JdbcTemplate.executeUpdate(sql, userNo);
@@ -120,7 +120,7 @@ public class UserDaoImpl implements UserDao {
 		return count;
 	}
 
-	public User queryByDeptNo(String userNo) throws SQLException, OAException {
+	public User queryByDeptNo(Integer userNo) throws SQLException, OAException {
 		//String sql = "select t_id,t_user_account,t_user_pwd,t_emp_no,t_role_id,t_create_time,t_user_status from t_user where t_id=?";
 		String sql="select u.t_id,u.t_user_account,u.t_user_pwd,u.t_emp_no,u.t_role_id,u.t_create_time,u.t_user_status, "+
 		" e.t_employ_name,r.t_role_name  from t_user u inner join t_employ e "

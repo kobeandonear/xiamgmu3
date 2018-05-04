@@ -1,0 +1,164 @@
+<span style="font-family:Comic Sans MS;font-size:12px;"><?xml version="1.0" encoding="UTF-8" ?>
+	<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+	<mapper namespace="com.njwb.dao.UserDao">
+		<select id="queryOne" resultType = "user">
+			select
+				u.t_id id,
+				u.t_user_account userName,
+				u.t_user_pwd pwd,
+				u.t_emp_no empNo,
+				u.t_role_id as "role.id" ,
+				u.t_create_time as "role.createTime",
+				u.t_user_status userStatus,
+				e.t_employ_name as "employ.employNo",
+				r.t_role_name as "role.roleName"
+			from
+				t_user u
+			inner join
+				t_employ e
+			on
+				u.t_emp_no=e.t_employ_no
+			inner join
+				t_role r
+			on
+				u.t_role_id=r.t_id
+			where
+				t_user_account= #{userName}and t_user_pwd=#{pwd}
+		</select>
+
+		<select id="queryLevelOne" resultType = "menu">
+			select
+				t_id menuID,
+				t_menu_name menuName,
+				t_href_url hrefUrl,
+				t_parent_id parentID,
+				t_create_time createTime
+			from
+				t_menu
+			where
+				<if test = "t_parent_id == null">
+					and t_id in (select t_menu_id from t_permissions where t_role_id = ${roleID})
+				</if>
+		</select>
+
+		<select id="queryMenuByParentID" resultType = "menu">
+			select
+				t_id menuID,
+				t_menu_name menuName,
+				t_href_url hrefUrl,
+				t_parent_id parentID,
+				t_create_time createTime
+			from
+				t_menu
+			where
+			<if test = "t_parent_id != null and t_parent_id != ‘’">
+				t_parent_id = #{parentID}
+			</if>
+			and t_id in (select t_menu_id from t_permissions where t_role_id = #{roleID})
+		</select>
+
+		<select id = "queryAllUsByPage" resultType="user">
+			select
+				u.t_id id,
+				u.t_user_account userName,
+				u.t_user_pwd pwd,
+				u.t_emp_no empNo,
+				u.t_role_id as "role.id" ,
+				u.t_create_time as "role.createTime",
+				u.t_user_status userStatus,
+				e.t_employ_name as "employ.employNo",
+				r.t_role_name as "role.roleName"
+			from
+				t_user u
+			inner join
+				t_employ e
+			on
+				u.t_emp_no=e.t_employ_no
+			inner join
+				t_role r
+			on
+				u.t_role_id=r.t_id
+			order by
+				u.t_id
+			limit #{startIndex}, #{pageSize}
+		</select>
+
+		<select id="queryCount" resultType = "java.lang.Integer">
+			select count(*) as cnt from t_user order by t_id
+		</select>
+
+		<insert id = "addUser">
+			insert into t_user(
+				t_user_account,t_user_pwd,t_emp_no,t_role_id,t_create_time,t_user_status)
+			values(
+				#{userName},#{pwd},#{empNo},#{role.id},#{role.createTime},#{userStatus})";
+		</insert>
+
+		<delete id = "deleteByNo" resultType = "java.lang.Integer">
+			delete from t_user where t_id = #{userNo}
+		</delete>
+
+		<update id = "updateUser">
+			update
+				t_user
+			set
+				t_user_account= #{userName},
+				t_user_pwd=#{pwd},
+				t_emp_no=#{empNo},
+				t_role_id=#{role.id},
+				t_create_time=#{role.createTime},
+				t_user_status=#{userStatus}
+			where
+				t_id=#{id}
+		</update>
+
+		<select id = "queryByDeptNo" resultType="user">
+			select
+				u.t_id id,
+				u.t_user_account userName,
+				u.t_user_pwd pwd,
+				u.t_emp_no empNo,
+				u.t_role_id as "role.id" ,
+				u.t_create_time as "role.createTime",
+				u.t_user_status userStatus,
+				e.t_employ_name as "employ.employNo",
+				r.t_role_name as "role.roleName"
+			from
+				t_user u
+			inner join
+				t_employ e
+			on
+				u.t_emp_no=e.t_employ_no
+			inner join
+				t_role r
+			on
+				u.t_role_id=r.t_id
+			where u.t_id= #{userNo}
+		</select>
+
+		<select id = "queryUserByRoleId" resultType="User">
+			select
+				u.t_id id,
+				u.t_user_account userName,
+				u.t_user_pwd pwd,
+				u.t_emp_no empNo,
+				u.t_role_id as "role.id" ,
+				u.t_create_time as "role.createTime",
+				u.t_user_status userStatus,
+				e.t_employ_name as "employ.employNo",
+				r.t_role_name as "role.roleName"
+			from
+				t_user u
+			inner join
+				t_employ e
+			on
+				u.t_emp_no=e.t_employ_no
+			inner join
+				t_role r
+			on
+				u.t_role_id=r.t_id
+			where
+				r.id= #{roleID}
+		</select>
+	</mapper>
+</span>

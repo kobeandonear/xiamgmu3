@@ -38,11 +38,12 @@
         <!-- <setting name="logImpl" value="LOG4J" />  -->
     </settings>
 
+    <typeAliases>
+        <package name="com.njwb.entity"/>
+    </typeAliases>
 
-
-<!--
-        <mappers>
-            <mapper resource="com/bupt/mybatis/Test.xml"/>
-        </mappers>-->
+    <mappers>
+        <mapper resource="com/njwb/dao/mappers/UserMapper.xml"/>
+    </mappers>
 
 </configuration>

@@ -25,14 +25,13 @@ public interface UserService {
 	public PageModel<User> queryAllUsByPage(String pageNoStr);
 
 	public List<User> queryUserByRoleId(int roleID) throws SQLException;
+
 	public void addUser(User user) throws OAException;
 
 
-	public int deleteByNo(String userNo) throws OAException;
+	public int deleteByNo(Integer userNo) throws OAException;
 
-
-	public User queryByUserNo(String userNo) throws OAException;
-
+	public User queryByUserNo(Integer userNo) throws OAException;
 
 	public void updateUser(User user) throws OAException;
 
