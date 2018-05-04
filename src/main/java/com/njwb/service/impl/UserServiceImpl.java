@@ -38,7 +38,13 @@ public class UserServiceImpl implements UserService {
 	
 	
 	public User queryOne(String userName, String pwd) {
-		return userDao.queryOne(userName, pwd);
+		try{
+			User user = userDao.queryOne(userName, pwd);
+			return user;
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 
@@ -55,7 +61,7 @@ public class UserServiceImpl implements UserService {
 			}
 			
 			return menuList;
-		}catch (SQLException e) {
+		}catch (Exception e) {
 			log.info("查询菜单出错",e);
 			return null;
 		}

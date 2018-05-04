@@ -8,7 +8,9 @@ import com.njwb.entity.Menu;
 import com.njwb.entity.User;
 import com.njwb.exception.OAException;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
+@Repository("userDao")
 public interface UserDao {
 
     User queryOne(@Param("userName") String userName,@Param("pwd") String pwd);

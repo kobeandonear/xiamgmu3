@@ -42,8 +42,8 @@
         <package name="com.njwb.entity"/>
     </typeAliases>
 
-    <mappers>
+ <!--   <mappers>
         <mapper resource="com/njwb/dao/mappers/UserMapper.xml"/>
     </mappers>
-
+-->
 </configuration>

@@ -45,9 +45,16 @@
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <property name="configLocation" value="classpath:MybatisConfig.xml"/>
+        <property name="mapperLocations">
+            <list>
+                <value>classpath:com/njwb/dao/mappers/*.xml</value>
+            </list>
+        </property>
+
     </bean>
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="com.njwb.dao"></property>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
     </bean>
     <!--====事务相关控制==-->
     <bean id="transactionManager"
@@ -76,7 +83,7 @@
 
 
     <bean id="txManager" class="com.njwb.transaction.impl.TransactionImpl"></bean>
-    <bean id="userDao" class="com.njwb.dao.impl.UserDaoImpl"></bean>
+    <!--<bean id="userDao" class="com.njwb.dao.UserDao"></bean>-->
     <bean id="deptDao" class="com.njwb.dao.impl.DeptDaoImpl"></bean>
     <bean id="employDao" class="com.njwb.dao.impl.EmployDaoImpl"></bean>
     <bean id="holidayDao" class="com.njwb.dao.impl.HolidayDaoImpl"></bean>
