@@ -29,6 +29,7 @@ import com.njwb.service.PermissionsService;
 import com.njwb.service.RoleService;
 import com.njwb.system.SystemProterties;
 import com.njwb.util.StringUtil;
+import org.apache.struts2.ServletActionContext;
 
 public class PermissionsController {
 	private Logger log = Logger.getLogger(PermissionsController.class);
@@ -49,8 +50,9 @@ public class PermissionsController {
 	}
 	
 	
-	public String queryAllPerByPage(HttpServletRequest req,
-			HttpServletResponse resp) {
+	public String queryAllPerByPage() {
+		HttpServletRequest req = ServletActionContext.getRequest();
+		HttpServletResponse resp = ServletActionContext.getResponse();
 		String pageNoStr = req.getParameter("pageNo");
 		
 		PageModel<Permissions> pageModel = null;
@@ -69,8 +71,9 @@ public class PermissionsController {
 	 * 删除权限信息
 	 * @throws IOException 
 	 */
-	public void delPerm(HttpServletRequest request,
-			HttpServletResponse resp) throws IOException {
+	public void delPerm() throws IOException {
+		HttpServletRequest request = ServletActionContext.getRequest();
+		HttpServletResponse resp = ServletActionContext.getResponse();
 		// 1.取参数
 		String id = request.getParameter("id");
 		
@@ -118,8 +121,10 @@ public class PermissionsController {
 	 * @throws FileUploadException 
 	 * @throws UnsupportedEncodingException 
 	 */
-	public String permAdd(HttpServletRequest request, HttpServletResponse resp) throws UnsupportedEncodingException, FileUploadException, Exception {
+	public String permAdd() throws UnsupportedEncodingException, FileUploadException, Exception {
 		//首先判断是否为二进制提交
+		HttpServletRequest request = ServletActionContext.getRequest();
+		HttpServletResponse resp = ServletActionContext.getResponse();
 		if(!ServletFileUpload.isMultipartContent(request))
 		{
 			log.info("请求不是二进制提交，请检查表单的enctype,method");
@@ -212,7 +217,9 @@ public class PermissionsController {
 	 * @return
 	 */
 	
-	public String permDetail(HttpServletRequest req, HttpServletResponse resp) {
+	public String permDetail() {
+		HttpServletRequest req = ServletActionContext.getRequest();
+		HttpServletResponse resp = ServletActionContext.getResponse();
 		HttpSession session = req.getSession();
 		
 		int permissionsNo = Integer.valueOf(req.getParameter("permId"));
@@ -265,7 +272,9 @@ public class PermissionsController {
 	 * @throws FileUploadException
 	 * @throws Exception
 	 */
-	public String editPerm(HttpServletRequest request, HttpServletResponse resp) throws UnsupportedEncodingException, FileUploadException, Exception {
+	public String editPerm() throws UnsupportedEncodingException, FileUploadException, Exception {
+		HttpServletRequest request = ServletActionContext.getRequest();
+		HttpServletResponse resp = ServletActionContext.getResponse();
 		if(!ServletFileUpload.isMultipartContent(request))
 		{
 			log.info("请求不是二进制提交，请检查表单的enctype,method");

@@ -31,6 +31,7 @@ import com.njwb.service.PermissionsService;
 import com.njwb.service.RoleService;
 import com.njwb.service.UserService;
 import com.njwb.util.StringUtil;
+import org.apache.struts2.ServletActionContext;
 
 
 public class RoleController {
@@ -48,7 +49,9 @@ public class RoleController {
 		this.permissionsService = permissionsService;
 	}
 	
-	public void queryAllRole(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+	public void queryAllRole() throws IOException {
+		HttpServletRequest req = ServletActionContext.getRequest();
+		HttpServletResponse resp = ServletActionContext.getResponse();
 		// //调用service
 		
 		List<Role> roleList = roleService.queryAllRole();
@@ -92,8 +95,9 @@ public class RoleController {
 	 * @throws SQLException 
 	 * @throws NumberFormatException 
 	 */
-	public void deleteRole(HttpServletRequest request,
-			HttpServletResponse resp) throws IOException, NumberFormatException, SQLException {
+	public void deleteRole() throws IOException, NumberFormatException, SQLException {
+		HttpServletRequest request = ServletActionContext.getRequest();
+		HttpServletResponse resp = ServletActionContext.getResponse();
 		// 1.取参数
 		String roleNo = request.getParameter("roleId");
 		
@@ -146,8 +150,9 @@ public class RoleController {
 	 * 根据某个编号查询详情
 	 * @return 
 	 */
-	public String roleDetail(HttpServletRequest req, HttpServletResponse resp) {
-	
+	public String roleDetail() {
+		HttpServletRequest req = ServletActionContext.getRequest();
+		HttpServletResponse resp = ServletActionContext.getResponse();
 		
 		String roleNo = req.getParameter("roleId");
 		req.getSession().setAttribute("roleId", roleNo);
@@ -185,8 +190,10 @@ public class RoleController {
 	}
 	
 	
-	public String addRole(HttpServletRequest request, HttpServletResponse resp) throws UnsupportedEncodingException, FileUploadException, Exception {
+	public String addRole() throws UnsupportedEncodingException, FileUploadException, Exception {
 		//首先判断是否为二进制提交
+		HttpServletRequest request = ServletActionContext.getRequest();
+		HttpServletResponse resp = ServletActionContext.getResponse();
 		if(!ServletFileUpload.isMultipartContent(request))
 		{
 			log.info("请求不是二进制提交，请检查表单的enctype,method");
@@ -275,7 +282,9 @@ public class RoleController {
 	 * @throws UnsupportedEncodingException 
 	 * @throws IOException
 	 */
-	public String editRole(HttpServletRequest request, HttpServletResponse resp) throws UnsupportedEncodingException, FileUploadException, Exception {
+	public String editRole() throws UnsupportedEncodingException, FileUploadException, Exception {
+		HttpServletRequest request = ServletActionContext.getRequest();
+		HttpServletResponse resp = ServletActionContext.getResponse();
 		if(!ServletFileUpload.isMultipartContent(request))
 		{
 			log.info("请求不是二进制提交，请检查表单的enctype,method");

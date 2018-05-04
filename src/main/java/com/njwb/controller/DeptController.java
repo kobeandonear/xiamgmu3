@@ -30,6 +30,7 @@ import com.njwb.service.DeptService;
 import com.njwb.service.EmployService;
 import com.njwb.system.SystemProterties;
 import com.njwb.util.StringUtil;
+import org.apache.struts2.ServletActionContext;
 
 /**
  * 部门控制器 部门功能的增删改查
@@ -61,8 +62,9 @@ public class DeptController {
 	 * @return
 	 * @throws IOException 
 	 */
-	public void queryAll(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-
+	public void queryAll() throws IOException {
+		HttpServletRequest req = ServletActionContext.getRequest();
+		HttpServletResponse resp = ServletActionContext.getResponse();
 		// //调用service
 		// DeptService deptService = (DeptService) ApplicationContext
 		// .getBean("deptService");
@@ -91,8 +93,9 @@ public class DeptController {
 	 * @param resp
 	 * @return
 	 */
-	public String queryAllByPage(HttpServletRequest req,
-			HttpServletResponse resp) {
+	public String queryAllByPage() {
+		HttpServletRequest req = ServletActionContext.getRequest();
+		HttpServletResponse resp = ServletActionContext.getResponse();
 		//int pageSize = 3;
 		String pageNoStr = req.getParameter("pageNo");
 		
@@ -147,8 +150,10 @@ public class DeptController {
 			return "error";
 		}
 	}*/
-	public String addDept(HttpServletRequest request, HttpServletResponse resp) throws Exception {
+	public String addDept() throws Exception {
 		//首先判断是否为二进制提交
+		HttpServletRequest request = ServletActionContext.getRequest();
+		HttpServletResponse resp = ServletActionContext.getResponse();
 		if(!ServletFileUpload.isMultipartContent(request))
 		{
 			log.info("请求不是二进制提交，请检查表单的enctype,method");
@@ -249,8 +254,9 @@ public class DeptController {
 	 * @param resp
 	 * @return
 	 */
-	public String deleteDept(HttpServletRequest request,
-			HttpServletResponse resp) {
+	public String deleteDept() {
+		HttpServletRequest request = ServletActionContext.getRequest();
+		HttpServletResponse resp = ServletActionContext.getResponse();
 		// 1.取参数
 		String resultCode = ErrorCode.SUCCESS;
 		String deptNo = request.getParameter("deptNo");
@@ -301,11 +307,13 @@ public class DeptController {
 	 * @throws FileUploadException 
 	 * @throws UnsupportedEncodingException 
 	 */
-	public String editDept(HttpServletRequest request, HttpServletResponse resp) throws UnsupportedEncodingException, FileUploadException, Exception {
+	public String editDept() throws UnsupportedEncodingException, FileUploadException, Exception {
 		/*String deptNo = request.getParameter("deptNo");
 		String deptName = request.getParameter("deptName");
 		String deptLoc = request.getParameter("deptLoc");
 		String deptManager = request.getParameter("deptMaster");*/
+		HttpServletRequest request = ServletActionContext.getRequest();
+		HttpServletResponse resp = ServletActionContext.getResponse();
 		//首先判断是否为二进制提交
 		if(!ServletFileUpload.isMultipartContent(request))
 		{
@@ -363,7 +371,9 @@ public class DeptController {
 	 * @return error:查询异常，result.jsp, modify:修改，deptEdit.jsp, detail:详情，
 	 *         deptDetail.jsp
 	 */
-	public String deptDetail(HttpServletRequest req, HttpServletResponse resp) {
+	public String deptDetail() {
+		HttpServletRequest req = ServletActionContext.getRequest();
+		HttpServletResponse resp = ServletActionContext.getResponse();
 		String deptNo = req.getParameter("deptNo");
 		Dept dept;
 		try {
@@ -398,8 +408,10 @@ public class DeptController {
 	 * @param resp
 	 * @throws IOException
 	 */
-	public void checkNameText(HttpServletRequest req, HttpServletResponse resp) throws IOException
+	public void checkNameText() throws IOException
 	{
+		HttpServletRequest req = ServletActionContext.getRequest();
+		HttpServletResponse resp = ServletActionContext.getResponse();
 		String deptName = req.getParameter("deptName");
 		log.info("处理ajax请求，验证是否重名,deptName:" + deptName);
 		//调用后台service,根据deptName查询是否有数据
@@ -423,8 +435,10 @@ public class DeptController {
 	 * @throws IOException
 	 * @throws OAException 
 	 */
-	public void queryDeptXml(HttpServletRequest req, HttpServletResponse resp) throws IOException, OAException
+	public void queryDeptXml() throws IOException, OAException
 	{
+		HttpServletRequest req = ServletActionContext.getRequest();
+		HttpServletResponse resp = ServletActionContext.getResponse();
 		String deptNo = req.getParameter("deptNo");
 		log.info("ajax请求处理，查询部门信息，deptNo:" + deptNo);
 		Dept dept = deptService.queryByDeptNo(deptNo);
@@ -446,8 +460,10 @@ public class DeptController {
 	 * @throws IOException
 	 * @throws OAException 
 	 */
-	public void queryDeptJson(HttpServletRequest req, HttpServletResponse resp) throws IOException, OAException
+	public void queryDeptJson() throws IOException, OAException
 	{
+		HttpServletRequest req = ServletActionContext.getRequest();
+		HttpServletResponse resp = ServletActionContext.getResponse();
 		String deptNo = req.getParameter("deptNo");
 		log.info("ajax请求处理，查询部门信息，deptNo:" + deptNo);
 		Dept dept = deptService.queryByDeptNo(deptNo);

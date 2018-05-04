@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.sun.deploy.net.HttpResponse;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -19,7 +20,7 @@ import com.njwb.constant.ErrorCode;
 import com.njwb.entity.Dept;
 import com.njwb.service.DeptService;
 import com.njwb.system.SystemProterties;
-
+import org.apache.struts2.ServletActionContext;
 
 
 /**
@@ -41,8 +42,9 @@ public class UploadController {
 	 * @return
 	 * @throws Exception
 	 */
-	public String uploadImg(HttpServletRequest req,
-			HttpServletResponse resp) throws Exception {
+	public String uploadImg() throws Exception {
+		HttpServletRequest req = ServletActionContext.getRequest();
+		HttpServletResponse resp = ServletActionContext.getResponse();
 		log.info("处理文件上传请求");
 		//1.判断是否是二进制提交
 		if(!ServletFileUpload.isMultipartContent(req))
@@ -94,8 +96,9 @@ public class UploadController {
 	 * @return
 	 * @throws Exception
 	 */
-	public String upload(HttpServletRequest req,
-			HttpServletResponse resp) throws Exception {
+	public String upload() throws Exception {
+		HttpServletRequest req = ServletActionContext.getRequest();
+		HttpServletResponse resp = ServletActionContext.getResponse();
 		log.info("处理文件上传请求");
 		//1.判断是否是二进制提交
 		if(!ServletFileUpload.isMultipartContent(req))

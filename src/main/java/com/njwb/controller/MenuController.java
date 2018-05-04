@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 
 import com.njwb.entity.Menu;
 import com.njwb.service.MenuService;
+import org.apache.struts2.ServletActionContext;
 
 public class MenuController {
 	private Logger log = Logger.getLogger(MenuController.class);
@@ -21,7 +22,9 @@ public class MenuController {
 	}
 	
 	
-	public void queryAllMenu(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+	public void queryAllMenu() throws IOException {
+		HttpServletRequest req = ServletActionContext.getRequest();
+		HttpServletResponse resp = ServletActionContext.getResponse();
 		// //调用service
 		// MenuService menuService = (MenuService) ApplicationContext
 		// .getBean("menuService");

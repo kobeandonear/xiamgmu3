@@ -24,6 +24,7 @@ import com.njwb.entity.PageModel;
 import com.njwb.exception.OAException;
 import com.njwb.service.AccountService;
 import com.njwb.util.StringUtil;
+import org.apache.struts2.ServletActionContext;
 
 public class AccountController {
 	private Logger log = Logger.getLogger(AccountController.class);
@@ -37,8 +38,9 @@ public class AccountController {
 	
 	
 	
-	public String queryAllAcByPage(HttpServletRequest req,
-			HttpServletResponse resp) {
+	public String queryAllAcByPage() {
+		HttpServletRequest req = ServletActionContext.getRequest();
+		HttpServletResponse resp = ServletActionContext.getResponse();
 		String pageNoStr = req.getParameter("pageNo");
 		User user = (User)req.getSession().getAttribute("loginUser");
 		PageModel<Account> pageModel = null;
@@ -61,9 +63,10 @@ public class AccountController {
 	 * 删除报销信息
 	 * @throws IOException 
 	 */
-	public void deleteAccount(HttpServletRequest request,
-			HttpServletResponse resp) throws IOException {
+	public void deleteAccount() throws IOException {
 		// 1.取参数
+		HttpServletRequest request = ServletActionContext.getRequest();
+		HttpServletResponse resp = ServletActionContext.getResponse();
 		String accountNo = request.getParameter("accountNo");
 		String accountStatus = request.getParameter("accountStatus");
 		log.info("accountNo:"+accountNo);
@@ -108,7 +111,9 @@ public class AccountController {
 	 * @return
 	 */
 	
-	public String accountDetail(HttpServletRequest req, HttpServletResponse resp) {
+	public String accountDetail() {
+		HttpServletRequest req = ServletActionContext.getRequest();
+		HttpServletResponse resp = ServletActionContext.getResponse();
 		HttpSession session = req.getSession();
 		String accountNo = req.getParameter("accountNo");
 		
@@ -154,8 +159,10 @@ public class AccountController {
 	 * @throws FileUploadException 
 	 * @throws UnsupportedEncodingException 
 	 */
-	public String addAccount(HttpServletRequest request, HttpServletResponse resp) throws UnsupportedEncodingException, FileUploadException, Exception {
+	public String addAccount() throws UnsupportedEncodingException, FileUploadException, Exception {
 		//首先判断是否为二进制提交
+		HttpServletRequest request = ServletActionContext.getRequest();
+		HttpServletResponse resp = ServletActionContext.getResponse();
 		if(!ServletFileUpload.isMultipartContent(request))
 		{
 			log.info("请求不是二进制提交，请检查表单的enctype,method");
@@ -239,7 +246,9 @@ public class AccountController {
 	 * @throws FileUploadException
 	 * @throws Exception
 	 */
-	public String editAccount(HttpServletRequest request, HttpServletResponse resp) throws UnsupportedEncodingException, FileUploadException, Exception {
+	public String editAccount() throws UnsupportedEncodingException, FileUploadException, Exception {
+		HttpServletRequest request = ServletActionContext.getRequest();
+		HttpServletResponse resp = ServletActionContext.getResponse();
 		if(!ServletFileUpload.isMultipartContent(request))
 		{
 			log.info("请求不是二进制提交，请检查表单的enctype,method");

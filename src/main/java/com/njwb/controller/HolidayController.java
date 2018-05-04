@@ -26,6 +26,7 @@ import com.njwb.exception.OAException;
 import com.njwb.service.HolidayService;
 import com.njwb.util.DateUtil;
 import com.njwb.util.StringUtil;
+import org.apache.struts2.ServletActionContext;
 
 public class HolidayController {
 	private Logger log = Logger.getLogger(HolidayController.class);
@@ -34,8 +35,9 @@ public class HolidayController {
 		this.holidayService = holidayService;
 	}
 	
-	public String queryAllHdByPage(HttpServletRequest req,
-			HttpServletResponse resp) {
+	public String queryAllHdByPage() {
+		HttpServletRequest req = ServletActionContext.getRequest();
+		HttpServletResponse resp = ServletActionContext.getResponse();
 		String pageNoStr = req.getParameter("pageNo");
 		User user = (User)req.getSession().getAttribute("loginUser");
 		PageModel<Holiday> pageModel = null;
@@ -67,9 +69,10 @@ public class HolidayController {
 	 * 删除请假人员信息
 	 * @throws IOException 
 	 */
-	public void deleteHoliday(HttpServletRequest request,
-			HttpServletResponse resp) throws IOException {
+	public void deleteHoliday() throws IOException {
 		// 1.取参数
+		HttpServletRequest request = ServletActionContext.getRequest();
+		HttpServletResponse resp = ServletActionContext.getResponse();
 		String holidayNo = request.getParameter("holidayNo");
 		String holidayStatus = request.getParameter("holidayStatus");
 		log.info("holidayNo:"+holidayNo);
@@ -111,7 +114,9 @@ public class HolidayController {
 	 * 根据某个编号查询详情
 	 * @return 
 	 */
-	public String holidayDetail(HttpServletRequest req, HttpServletResponse resp) {
+	public String holidayDetail() {
+		HttpServletRequest req = ServletActionContext.getRequest();
+		HttpServletResponse resp = ServletActionContext.getResponse();
 		String[] list = {"事假","婚假","年假","调休","病假","丧假"};
 		
 		HttpSession session = req.getSession();
@@ -159,8 +164,10 @@ public class HolidayController {
 	}
 	
 	
-	public String addHoliday(HttpServletRequest request, HttpServletResponse resp) throws UnsupportedEncodingException, FileUploadException, Exception {
+	public String addHoliday() throws UnsupportedEncodingException, FileUploadException, Exception {
 		//首先判断是否为二进制提交
+		HttpServletRequest request = ServletActionContext.getRequest();
+		HttpServletResponse resp = ServletActionContext.getResponse();
 		if(!ServletFileUpload.isMultipartContent(request))
 		{
 			log.info("请求不是二进制提交，请检查表单的enctype,method");
@@ -245,7 +252,9 @@ public class HolidayController {
 	 * @throws UnsupportedEncodingException 
 	 * @throws IOException
 	 */
-	public String editHoliday(HttpServletRequest request, HttpServletResponse resp) throws UnsupportedEncodingException, FileUploadException, Exception {
+	public String editHoliday() throws UnsupportedEncodingException, FileUploadException, Exception {
+		HttpServletRequest request = ServletActionContext.getRequest();
+		HttpServletResponse resp = ServletActionContext.getResponse();
 		if(!ServletFileUpload.isMultipartContent(request))
 		{
 			log.info("请求不是二进制提交，请检查表单的enctype,method");
